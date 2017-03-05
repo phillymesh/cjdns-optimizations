@@ -11,9 +11,18 @@ Both builds were performed on Armbian, Armbian_5.25_Orangepizero_Debian_jessie_d
 ```
 $ uname -a
 Linux orangepizero 3.4.113-sun8i #10 SMP PREEMPT Thu Feb 23 19:55:00 CET 2017 armv7l GNU/Linux
+
+$ gcc --version | grep "gcc" 
+gcc (Debian 4.9.2-10) 4.9.2 
+
+$ ./cjdroute --version 
+Cjdns version: cjdns-v19.1
+Cjdns protocol version: 19
 ```
 
-**Default Build**
+### Default Build
+
+#### Bench
 
 ```
 $ ./do
@@ -29,7 +38,18 @@ $ ./cjdroute --bench | grep "per second"
 1488588902 INFO Benchmark.c:62 Benchmark Switching in 3506ms. 58414 packets per second
 ```
 
-**Optimized Build**
+#### Throughput
+
+```
+$ iperf3 -t120 -c CJDNS_PEER_IP_ON_LAN
+[ ID] Interval        Transfer   Bandwidth      Retr 
+[  4] 0.00-120.00 sec 290 MBytes 20.3 Mbits/sec 165 sender
+[  4] 0.00-120.00 sec 290 MBytes 20.3 Mbits/sec receiver
+```
+
+### Optimized Build
+
+#### Bench
 
 ```
 $ CFLAGS="-s -static -Wall -march=armv7ve -mcpu=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard -mtune=cortex-a7 -fomit-frame-pointer -marm" ./do
@@ -45,6 +65,15 @@ $ ./cjdroute --bench | grep "per second"
 1488589368 INFO Benchmark.c:62 Benchmark Switching in 2847ms. 71935 packets per second
 ```
 
+#### Throughput
+
+```
+$ iperf3 -t120 -c CJDNS_PEER_IP_ON_LAN
+[ ID] Interval        Transfer   Bandwidth      Retr 
+[  4] 0.00-120.00 sec 366 MBytes 25.6 Mbits/sec 141 sender
+[  4] 0.00-120.00 sec 366 MBytes 25.6 Mbits/sec receiver
+```
+
 ## Pine A64
 
 Both builds were performed on Armbian, Armbian_5.25_Pine64_Debian_jessie_default_3.10.104.img using cjdns-v19.1
@@ -54,7 +83,9 @@ $ uname -a
 Linux pine64 3.10.104-pine64 #15 SMP PREEMPT Fri Feb 3 18:12:41 CET 2017 aarch64 GNU/Linux
 ```
 
-**Default Build**
+### Default Build
+
+#### Bench
 
 ```
 $ Seccomp_NO=1 ./do
@@ -71,7 +102,9 @@ $ ./cjdroute --bench | grep "per second"
 1488587785 INFO Benchmark.c:62 Benchmark Switching in 1732ms. 118244 packets per second
 ```
 
-**Optimized Build**
+### Optimized Build
+
+#### Bench
 
 The Pine A64 is advertised to have NEON support and hard-float, but hcc complains if they are specified
 
@@ -98,7 +131,9 @@ $ uname -a
 Linux beaglebone 4.4.36-ti-r72 #1 SMP Wed Dec 7 22:29:53 UTC 2016 armv7l GNU/Linux
 ```
 
-**Default Build**
+### Default Build
+
+#### Bench
 
 ```
 $ ./do
@@ -114,7 +149,9 @@ $ ./cjdroute --bench | grep "per second"
 1488590211 INFO Benchmark.c:62 Benchmark Switching in 4336ms. 47232 packets per second
 ```
 
-**Optimized Build**
+### Optimized Build
+
+#### Bench
 
 ```
 $ CFLAGS="-s -static -Wall -march=armv7-a -mcpu=cortex-a8 -mtune=cortex-a8 -marm -mfloat-abi=hard -mfpu=neon -fomit-frame-pointer" ./do
