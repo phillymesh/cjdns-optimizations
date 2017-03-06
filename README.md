@@ -43,8 +43,8 @@ $ ./cjdroute --bench | grep "per second"
 ```
 $ iperf3 -t120 -c CJDNS_PEER_IP_ON_LAN
 [ ID] Interval        Transfer   Bandwidth      Retr 
-[  4] 0.00-120.00 sec 290 MBytes 20.3 Mbits/sec 165 sender
-[  4] 0.00-120.00 sec 290 MBytes 20.3 Mbits/sec receiver
+[  4] 0.00-120.00 sec 290 MBytes 20.3 Mbits/sec 165  sender
+[  4] 0.00-120.00 sec 290 MBytes 20.3 Mbits/sec      receiver
 ```
 
 ### Optimized Build
@@ -70,8 +70,8 @@ $ ./cjdroute --bench | grep "per second"
 ```
 $ iperf3 -t120 -c CJDNS_PEER_IP_ON_LAN
 [ ID] Interval        Transfer   Bandwidth      Retr 
-[  4] 0.00-120.00 sec 366 MBytes 25.6 Mbits/sec 141 sender
-[  4] 0.00-120.00 sec 366 MBytes 25.6 Mbits/sec receiver
+[  4] 0.00-120.00 sec 366 MBytes 25.6 Mbits/sec 141  sender
+[  4] 0.00-120.00 sec 366 MBytes 25.6 Mbits/sec      receiver
 ```
 
 ## Pine A64
@@ -81,6 +81,13 @@ Both builds were performed on Armbian, Armbian_5.25_Pine64_Debian_jessie_default
 ``` 
 $ uname -a
 Linux pine64 3.10.104-pine64 #15 SMP PREEMPT Fri Feb 3 18:12:41 CET 2017 aarch64 GNU/Linux
+
+$ gcc --version | grep "gcc" 
+gcc (Debian/Linaro 4.9.2-10) 4.9.2 
+
+$ ./cjdroute --version Cjdns version: 
+cjdns-v19.1
+Cjdns protocol version: 19
 ```
 
 ### Default Build
@@ -100,6 +107,15 @@ $ ./cjdroute --bench | grep "per second"
 $ ./cjdroute --bench | grep "per second" 
 1488587784 INFO Benchmark.c:62 Benchmark salsa20/poly1305 in 6211ms. 193205 kilobits per second
 1488587785 INFO Benchmark.c:62 Benchmark Switching in 1732ms. 118244 packets per second
+```
+
+#### Throughput
+
+```
+$ iperf3 -t120 -c CJDNS_PEER_IP_ON_LAN 
+[ ID] Interval        Transfer   Bandwidth      Retr 
+[  4] 0.00-120.00 sec 346 MBytes 24.2 Mbits/sec 137  sender
+[  4] 0.00-120.00 sec 346 MBytes 24.2 Mbits/sec      receiver
 ```
 
 ### Optimized Build
@@ -122,6 +138,15 @@ $ ./cjdroute --bench | grep "per second"
 1488587456 INFO Benchmark.c:62 Benchmark Switching in 1713ms. 119556 packets per second                                   
 ```
 
+#### Throughput
+
+``` 
+$ iperf3 -t120 -c CJDNS_PEER_IP_ON_LAN
+[ ID] Interval        Transfer   Bandwidth      Retr 
+[  4] 0.00-120.00 sec 353 MBytes 24.7 Mbits/sec 127  sender
+[  4] 0.00-120.00 sec 353 MBytes 24.7 Mbits/sec      receiver
+```
+
 ## BeagleBone Black
 
 Both builds were performed on Debian IoT, the official headless Debian for BeagleBone, bone-debian-8.6-iot-armhf-2016-12-09-4gb.img using cjdns-v19.1
@@ -129,6 +154,13 @@ Both builds were performed on Debian IoT, the official headless Debian for Beagl
 ``` 
 $ uname -a
 Linux beaglebone 4.4.36-ti-r72 #1 SMP Wed Dec 7 22:29:53 UTC 2016 armv7l GNU/Linux
+
+$ gcc --version | grep "gcc" 
+gcc (Debian 4.9.2-10) 4.9.2 
+
+$ ./cjdroute --version 
+Cjdns version: cjdns-v19.1
+Cjdns protocol version: 19
 ```
 
 ### Default Build
@@ -149,6 +181,15 @@ $ ./cjdroute --bench | grep "per second"
 1488590211 INFO Benchmark.c:62 Benchmark Switching in 4336ms. 47232 packets per second
 ```
 
+#### Throughput
+
+```
+$ iperf3 -t120 -c CJDNS_PEER_IP_ON_LAN
+[ ID] Interval        Transfer    Bandwidth      Retr 
+[  4] 0.00-120.00 sec 88.1 MBytes 6.16 Mbits/sec 160  sender
+[  4] 0.00-120.00 sec 87.9 MBytes 6.14 Mbits/sec      receiver
+```
+
 ### Optimized Build
 
 #### Bench
@@ -165,6 +206,67 @@ $ ./cjdroute --bench | grep "per second"
 $ ./cjdroute --bench | grep "per second"
 1488590588 INFO Benchmark.c:62 Benchmark salsa20/poly1305 in 3519ms. 341005 kilobits per second
 1488590590 INFO Benchmark.c:62 Benchmark Switching in 2918ms. 70185 packets per second
+```
+
+#### Throughput
+
+``` 
+$ iperf3 -t120 -c CJDNS_PEER_IP_ON_LAN 
+[ ID] Interval        Transfer   Bandwidth      Retr 
+[  5] 0.00-120.06 sec 172 MBytes 12.0 Mbits/sec 63   sender
+[  5] 0.00-120.06 sec 172 MBytes 12.0 Mbits/sec      receiver
+```
+
+## Raspberry Pi 2
+
+Both builds were performed on DietPi, using DietPi_v145_RPi-armv6-(Jessie).img using cjdns-v19.1
+
+```
+$ uname -a 
+Linux DietPi 4.4.44-v7+ #2 SMP Sat Feb 11 16:07:35 UTC 2017 armv7l GNU/Linux
+
+$ gcc --version | grep "gcc" 
+gcc (Raspbian 4.9.2-10) 4.9.2
+
+$ ./cjdroute --version 
+Cjdns version: cjdns-v19.1
+Cjdns protocol version: 19
+```
+
+### Default Build
+
+#### Bench
+
+```
+$ Seccomp_NO=1 ./do
+
+$ ./cjdroute --bench | grep "per second" 
+1488765477 INFO Benchmark.c:62 Benchmark salsa20/poly1305 in 16807ms. 71398 kilobits per second 
+1488765482 INFO Benchmark.c:62 Benchmark Switching in 4551ms. 45001 packets per second  
+$ ./cjdroute --bench | grep "per second" 
+1488765562 INFO Benchmark.c:62 Benchmark salsa20/poly1305 in 16802ms. 71420 kilobits per second 
+1488765566 INFO Benchmark.c:62 Benchmark Switching in 4530ms. 45209 packets per second 
+$ ./cjdroute --bench | grep "per second" 
+1488765613 INFO Benchmark.c:62 Benchmark salsa20/poly1305 in 16792ms. 71462 kilobits per second
+1488765617 INFO Benchmark.c:62 Benchmark Switching in 4527ms. 45239 packets per second
+```
+
+### Optimized Build
+
+#### Bench
+
+```
+$ Seccomp_NO=1 CFLAGS="-s -static -Wall -mfpu=neon-vfpv4 -mfloat-abi=hard -mcpu=cortex-a7 -mtune=cortex-a7 -fomit-frame-pointer -marm" ./do
+
+# ./cjdroute --bench | grep "per second"
+1488764572 INFO Benchmark.c:62 Benchmark salsa20/poly1305 in 8155ms. 147148 kilobits per second 
+1488764576 INFO Benchmark.c:62 Benchmark Switching in 3963ms. 51678 packets per second 
+$ ./cjdroute --bench | grep "per second" 
+1488764604 INFO Benchmark.c:62 Benchmark salsa20/poly1305 in 8159ms. 147076 kilobits per second 
+1488764608 INFO Benchmark.c:62 Benchmark Switching in 3962ms. 51691 packets per second 
+$ ./cjdroute --bench | grep "per second" 
+1488764670 INFO Benchmark.c:62 Benchmark salsa20/poly1305 in 8155ms. 147148 kilobits per second
+1488764674 INFO Benchmark.c:62 Benchmark Switching in 3987ms. 51366 packets per second
 ```
 
 ## TODO
