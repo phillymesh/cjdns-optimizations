@@ -122,7 +122,7 @@ $ iperf3 -t120 -c CJDNS_PEER_IP_ON_LAN
 
 #### Bench
 
-The Pine A64 is advertised to have NEON support and hard-float, but hcc complains if they are specified
+The Pine A64 is advertised to have NEON support and hard-float, but gcc complains if they are specified
 
 ```
 $ Seccomp_NO=1 CFLAGS="-s -static -Wall -march=armv8-a+crc+crypto -mcpu=cortex-a53 -ftree-vectorize -mtune=cortex-a53 -fomit-frame-pointer" ./do
