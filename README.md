@@ -74,6 +74,10 @@ $ iperf3 -t120 -c CJDNS_PEER_IP_ON_LAN
 [  4] 0.00-120.00 sec 366 MBytes 25.6 Mbits/sec      receiver
 ```
 
+### Conclusion
+
+The Orange Pi Zero retails for $6.99 USD, so the estimated cost is $0.27 per Mbit.
+
 ## Pine A64
 
 Both builds were performed on Armbian, Armbian_5.25_Pine64_Debian_jessie_default_3.10.104.img using cjdns-v19.1
@@ -147,6 +151,10 @@ $ iperf3 -t120 -c CJDNS_PEER_IP_ON_LAN
 [  4] 0.00-120.00 sec 353 MBytes 24.7 Mbits/sec      receiver
 ```
 
+### Conclusion
+
+The Pine A64 retails for $15.00 USD, so the estimated cost is $0.61 per Mbit. 
+
 ## BeagleBone Black
 
 Both builds were performed on Debian IoT, the official headless Debian for BeagleBone, bone-debian-8.6-iot-armhf-2016-12-09-4gb.img using cjdns-v19.1
@@ -216,6 +224,10 @@ $ iperf3 -t120 -c CJDNS_PEER_IP_ON_LAN
 [  5] 0.00-120.06 sec 172 MBytes 12.0 Mbits/sec 63   sender
 [  5] 0.00-120.06 sec 172 MBytes 12.0 Mbits/sec      receiver
 ```
+
+### Conclusion
+
+The BeagleBone black retails for $45.00 USD, so the estimated cost is $3.75 per Mbit.
 
 ## Raspberry Pi 2
 
