@@ -4,6 +4,15 @@ This document was created to track the performance of CJDNS builds on various pl
 
 Note: I am by no means an optimation update. If anything is incorrect or could be done better, feel free to open an issue or pull request.
 
+Tested Devices:
+
+* [Orange Pi Zero](#orange-pi-zero)
+* [Pine A64](#pine-a64)
+* [BeagleBone Black](#beaglebone-black)
+* [Raspberry Pi 3](#raspberry-pi-3)
+* [Raspberry Pi 2](#raspberry-pi-2)
+* [ODROID C2](#odroid-c2)
+
 ## Orange Pi Zero
 
 Both builds were performed on Armbian, Armbian_5.25_Orangepizero_Debian_jessie_default_3.4.113.img using cjdns-v19.1
