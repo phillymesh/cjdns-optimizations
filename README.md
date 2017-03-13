@@ -229,6 +229,106 @@ $ iperf3 -t120 -c CJDNS_PEER_IP_ON_LAN
 
 The BeagleBone black retails for $45.00 USD, so the estimated cost is $3.75 per Mbit.
 
+## Raspberry Pi 3
+
+Both builds were performed on Raspbian, using 2017-03-02-raspbian-jessie-lite.img using cjdns-v19.1
+
+```
+$ uname -a 
+Linux raspberrypi 4.4.50-v7+ #970 SMP Mon Feb 20 19:18:29 GMT 2017 armv7l GNU/Linux
+
+$ gcc --version | grep "gcc" 
+gcc (Raspbian 4.9.2-10) 4.9.2
+
+$ ./cjdroute --version 
+Cjdns version: cjdns-v19.1
+Cjdns protocol version: 19
+```
+
+### Default Build
+
+#### Bench
+
+```
+$ Seccomp_NO=1 ./do
+
+$ ./cjdroute --bench | grep "per second"
+1489372395 INFO Benchmark.c:62 Benchmark salsa20/poly1305 in 8693ms. 138042 kilobits per second
+1489372397 INFO Benchmark.c:62 Benchmark Switching in 2440ms. 83934 packets per second
+$ ./cjdroute --bench | grep "per second"
+1489372419 INFO Benchmark.c:62 Benchmark salsa20/poly1305 in 8644ms. 138824 kilobits per second
+1489372421 INFO Benchmark.c:62 Benchmark Switching in 2441ms. 83900 packets per second
+$ ./cjdroute --bench | grep "per second"
+1489372434 INFO Benchmark.c:62 Benchmark salsa20/poly1305 in 8643ms. 138840 kilobits per second
+1489372436 INFO Benchmark.c:62 Benchmark Switching in 2449ms. 83625 packets per second
+```
+
+### Optimized Build
+
+#### Bench
+
+##### Build Flags 1
+
+```
+$ Seccomp_NO=1 CFLAGS="-s -static -Wall -mfpu=neon-vfpv4 -mfloat-abi=hard -mcpu=cortex-a7 -mtune=cortex-a7 -fomit-frame-pointer -marm" ./do
+
+$ ./cjdroute --bench | grep "per second"
+1489372985 INFO Benchmark.c:62 Benchmark salsa20/poly1305 in 3459ms. 346921 kilobits per second
+1489372987 INFO Benchmark.c:62 Benchmark Switching in 2077ms. 98603 packets per second
+$ ./cjdroute --bench | grep "per second"
+1489372993 INFO Benchmark.c:62 Benchmark salsa20/poly1305 in 3463ms. 346520 kilobits per second
+1489372995 INFO Benchmark.c:62 Benchmark Switching in 2071ms. 98889 packets per second
+$ ./cjdroute --bench | grep "per second"
+1489373002 INFO Benchmark.c:62 Benchmark salsa20/poly1305 in 3456ms. 347222 kilobits per second
+1489373004 INFO Benchmark.c:62 Benchmark Switching in 2054ms. 99707 packets per second
+```
+
+##### Build Flags 2
+
+```
+$ Seccomp_NO=1 CFLAGS="-s -static -Wall -mfpu=neon -mcpu=cortex-a7 -mtune=cortex-a7 -fomit-frame-pointer -marm" ./do
+
+pi@raspberrypi:~/cjdns $ ./cjdroute --bench | grep "per second"
+1489373730 INFO Benchmark.c:62 Benchmark salsa20/poly1305 in 3428ms. 350058 kilobits per second
+1489373732 INFO Benchmark.c:62 Benchmark Switching in 2072ms. 98841 packets per second
+pi@raspberrypi:~/cjdns $ ./cjdroute --bench | grep "per second"
+1489373739 INFO Benchmark.c:62 Benchmark salsa20/poly1305 in 3407ms. 352216 kilobits per second
+1489373741 INFO Benchmark.c:62 Benchmark Switching in 2067ms. 99080 packets per second
+pi@raspberrypi:~/cjdns $ ./cjdroute --bench | grep "per second"
+1489373746 INFO Benchmark.c:62 Benchmark salsa20/poly1305 in 3405ms. 352422 kilobits per second
+1489373748 INFO Benchmark.c:62 Benchmark Switching in 2037ms. 100540 packets per second
+```
+
+#### Throughput
+
+##### Build Flags 1
+
+```
+$ iperf3 -t30 -c CJDNS_PEER_IP_ON_LAN
+[ ID] Interval           Transfer     Bandwidth       Retr
+[  4]   0.00-30.00  sec   255 MBytes  71.4 Mbits/sec   38             sender
+[  4]   0.00-30.00  sec   254 MBytes  71.0 Mbits/sec                  receiver
+
+$ iperf3 -R -t30 -c CJDNS_PEER_IP_ON_LAN
+[ ID] Interval           Transfer     Bandwidth
+[  4]   0.00-30.00  sec   198 MBytes  55.5 Mbits/sec                  sender
+[  4]   0.00-30.00  sec   198 MBytes  55.5 Mbits/sec                  receiver
+```
+
+##### Build Flags 2
+
+```
+$ iperf3 -t30 -c CJDNS_PEER_IP_ON_LAN
+[ ID] Interval           Transfer     Bandwidth       Retr
+[  4]   0.00-30.00  sec   272 MBytes  76.0 Mbits/sec  157             sender
+[  4]   0.00-30.00  sec   271 MBytes  75.7 Mbits/sec                  receiver
+
+$ iperf3 -R -t30 -c CJDNS_PEER_IP_ON_LAN
+[ ID] Interval           Transfer     Bandwidth
+[  4]   0.00-30.00  sec   199 MBytes  55.6 Mbits/sec                  sender
+[  4]   0.00-30.00  sec   199 MBytes  55.6 Mbits/sec                  receiver
+```
+
 ## Raspberry Pi 2
 
 Both builds were performed on DietPi, using DietPi_v145_RPi-armv6-(Jessie).img using cjdns-v19.1
