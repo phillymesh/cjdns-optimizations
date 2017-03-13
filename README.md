@@ -381,6 +381,54 @@ $ ./cjdroute --bench | grep "per second"
 1488764674 INFO Benchmark.c:62 Benchmark Switching in 3987ms. 51366 packets per second
 ```
 
+## ODROID C2
+
+Both builds were performed on Armbian, Armbian_5.25_Odroidc2_Debian_jessie_default_3.14.79.img using cjdns-v19.1
+
+``` 
+$ uname -a
+Linux odroidc2 3.14.79-odroidc2 #32 SMP PREEMPT Wed Feb 1 22:28:54 CET 2017 aarch64 GNU/Linux
+
+$ gcc --version | grep "gcc" 
+gcc (Debian/Linaro 4.9.2-10) 4.9.2
+
+$ ./cjdroute --version 
+Cjdns version: cjdns-v19.1
+Cjdns protocol version: 19
+```
+
+### Default Build
+
+#### Bench
+
+```
+$ MINVER=0.0.0 ./do
+
+$ ./cjdroute --bench | grep "per second"
+1489380110 INFO Benchmark.c:62 Benchmark salsa20/poly1305 in 4651ms. 258009 kilobits per second
+1489380112 INFO Benchmark.c:62 Benchmark Switching in 1238ms. 165428 packets per second
+$ ./cjdroute --bench | grep "per second"
+1489380121 INFO Benchmark.c:62 Benchmark salsa20/poly1305 in 4649ms. 258120 kilobits per second
+1489380122 INFO Benchmark.c:62 Benchmark Switching in 1227ms. 166911 packets per second
+$ ./cjdroute --bench | grep "per second"
+1489380132 INFO Benchmark.c:62 Benchmark salsa20/poly1305 in 4769ms. 251625 kilobits per second
+1489380133 INFO Benchmark.c:62 Benchmark Switching in 1272ms. 161006 packets per second
+```
+
+#### Throughput
+
+```
+$ iperf3 -t60 -c CJDNS_PEER_IP_ON_LAN
+[ ID] Interval           Transfer     Bandwidth       Retr
+[  4]   0.00-60.01  sec   754 MBytes   105 Mbits/sec  367             sender
+[  4]   0.00-60.01  sec   753 MBytes   105 Mbits/sec                  receiver
+
+$ iperf3 -R -t60 -c CJDNS_PEER_IP_ON_LAN
+[ ID] Interval           Transfer     Bandwidth
+[  4]   0.00-60.00  sec   426 MBytes  59.6 Mbits/sec                  sender
+[  4]   0.00-60.00  sec   426 MBytes  59.6 Mbits/sec                  receiver
+```
+
 ## TODO
 
 * Better descriptions of platforms
